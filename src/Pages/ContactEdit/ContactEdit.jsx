@@ -1,36 +1,38 @@
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { selectCurrentContact } from 'components/Redux/selectors';
 import { ErrorMessage, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import { PatternFormat } from 'react-number-format';
-import { useDispatch, useSelector } from 'react-redux';
-import { addNewContact } from 'components/Redux/thunk';
-import { selectContacts } from 'components/Redux/selectors';
 
-import { useNavigate } from 'react-router-dom';
+import { editContact } from 'components/Redux/thunk';
 
 const ContactsSchema = Yup.object().shape({
   name: Yup.string().required('* Name is required'),
   number: Yup.string().required('* Phone number is required'),
 });
 
-const initialValues = { name: '', number: '' };
+const ContactEdit = () => {
+  const { id } = useParams();
+  const currentContact = useSelector(state =>
+    selectCurrentContact(state, { id })
+  );
 
-export const ContactsForm = () => {
-  const allcontacts = useSelector(selectContacts);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleSubmit = (values, { resetForm }) => {
-    if (allcontacts.find(contact => contact.name === values.name)) {
-      return alert(`${values.name} is already in contacts`);
-    }
+  const initialValues = {
+    name: currentContact ? currentContact.name : '',
+    number: currentContact ? currentContact.number : '',
+  };
 
-    if (allcontacts.find(contact => contact.number === values.number)) {
-      return alert(`${values.number} is already in contacts`);
-    }
+  const handleSubmit = values => {
+    const updatedContact = { name: values.name, number: values.number, id };
 
-    dispatch(addNewContact({ ...values }));
-    navigate('/');
-    resetForm();
+    dispatch(editContact(updatedContact));
+
+    navigate(-1);
   };
 
   return (
@@ -68,9 +70,11 @@ export const ContactsForm = () => {
             style={{ color: 'red' }}
           />
 
-          <button type="submit"></button>
+          <button type="submit">Edit</button>
         </styled>
       </Formik>
     </div>
   );
 };
+
+export default ContactEdit;
