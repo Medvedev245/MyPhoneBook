@@ -1,10 +1,13 @@
 import { Suspense } from 'react';
+import { Container } from './Layout.styled';
 import { Header } from 'components/Header/Header';
 import { Outlet } from 'react-router-dom';
+// import { Toaster } from 'react-h/ot-toast';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export const Layout = () => {
   return (
-    <div>
+    <Container>
       <Header />
       <main>
         <Suspense
@@ -15,13 +18,16 @@ export const Layout = () => {
                 marginTop: '100px',
               }}
             >
-              <div style={{ marginLeft: 'auto', marginRight: 'auto' }}></div>
+              <div style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+                <CircularProgress color="success" />
+              </div>
             </div>
           }
         >
           <Outlet />
         </Suspense>
+        {/* <Toaster position="top-right" reverseOrder={true} /> */}
       </main>
-    </div>
+    </Container>
   );
 };

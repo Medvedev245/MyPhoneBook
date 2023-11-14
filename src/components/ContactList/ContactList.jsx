@@ -1,3 +1,20 @@
+import { MdDelete } from 'react-icons/md';
+import { FiEdit } from 'react-icons/fi';
+import {
+  Thead,
+  Table,
+  TableRaw,
+  TableHor,
+  TableDataName,
+  TableRawContent,
+  TableDataNumber,
+  DeleteBtn,
+  Name,
+  TotalContacts,
+  EditBtn,
+  ButtonsWrapper,
+} from './ContactList.styled';
+import Avatar from '@mui/material/Avatar';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllContactsThunk, removeContact } from 'components/Redux/thunk';
 import {
@@ -34,18 +51,18 @@ export const ContactList = ({ stateItem }) => {
 
   return (
     <>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Phone Number</th>
-          </tr>
-        </thead>
-        <thead>
+      <Table>
+        <Thead>
+          <TableRaw>
+            <TableHor>Name</TableHor>
+            <TableHor>Phone Number</TableHor>
+          </TableRaw>
+        </Thead>
+        <TotalContacts>
           <tr>
             <td>CONTACTS ({contactsAmount})</td>
           </tr>
-        </thead>
+        </TotalContacts>
         <tbody>
           {filteredContacts.map(contact => {
             const firstLetter = contact.name.slice(0, 1).toUpperCase();
@@ -55,26 +72,35 @@ export const ContactList = ({ stateItem }) => {
             const ContactNameCapital = contactName + contactSliced;
 
             return (
-              <tr
+              <TableRawContent
                 key={contact.id}
                 onClick={() => handleContactDetailsClick(contact.id)}
               >
-                <td>
-                  {firstLetter}
+                <TableDataName>
+                  <Avatar
+                    sx={{
+                      bgcolor: getRandomHexColor(),
+                      width: 40,
+                      height: 40,
+                    }}
+                  >
+                    {firstLetter}
+                  </Avatar>
+                  <Name>{ContactNameCapital}</Name>
+                </TableDataName>
 
-                  <span>{ContactNameCapital}</span>
-                </td>
+                <TableDataNumber>{contact.phone}</TableDataNumber>
 
-                <td>{contact.number}</td>
-
-                <td className="ButtonsWrapper">
-                  <button
+                <ButtonsWrapper className="ButtonsWrapper">
+                  <EditBtn
                     onClick={e => {
                       e.stopPropagation();
                       navigate(`contact/${contact.id}/edit`);
                     }}
-                  ></button>
-                  <button
+                  >
+                    <FiEdit size={25} />
+                  </EditBtn>
+                  <DeleteBtn
                     onClick={e => {
                       e.stopPropagation();
 
@@ -83,13 +109,15 @@ export const ContactList = ({ stateItem }) => {
                         dispatch(removeContact(contact.id));
                       }
                     }}
-                  ></button>
-                </td>
-              </tr>
+                  >
+                    <MdDelete size={25} />
+                  </DeleteBtn>
+                </ButtonsWrapper>
+              </TableRawContent>
             );
           })}
         </tbody>
-      </table>
+      </Table>
     </>
   );
 };

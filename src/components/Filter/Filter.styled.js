@@ -1,11 +1,21 @@
 import styled from 'styled-components';
+import { InputBase } from '@mui/material';
 
-export const Wrapper = styled.div`
-  margin-bottom: 20px;
-  padding: 15px;
-  border: 1px solid;
+export const PaperStyledSearch = styled(InputBase)`
+  box-shadow: 0 0 0 transparent;
+  transition: background-color 250ms ease-in;
+  width: 100%;
+
+  &:focus-within {
+    background-color: transparent;
+    box-shadow: 0px 4px 8px 2px rgba(0, 0, 0, 0.52);
+  }
+
+  @media screen and (min-width: 767px) {
+    width: 300px;
+  }
 `;
 
-export const EntryField = styled.div`
-  margin-bottom: 15px;
+export const SearchStyled = styled(InputBase)`
+  background-color: inherit;
 `;

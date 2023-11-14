@@ -1,19 +1,38 @@
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Filter } from 'components/Filter/Filter';
-import { CreateContact } from 'components/CreateContact/CreateContact';
-import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-export const Header = () => {
-  return (
-    <header>
-      <Link to="/" style={{ textDecoration: 'none', color: '#696969' }}>
-        <div>
-          <AccountCircleIcon sx={{ fontSize: 50, color: '#47A76A' }} />
-          <div>Phonebook</div>
-        </div>
-      </Link>
-      <Filter />
-      <CreateContact />
-    </header>
-  );
-};
+export const HeaderWrapper = styled.header`
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+  top: 0;
+  position: sticky;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 0 16px;
+
+  @media screen and (min-width: 767px) {
+    padding-bottom: 10px;
+    padding-top: 10px;
+    flex-direction: row;
+    gap: 0px;
+    justify-content: space-between;
+    padding: 0;
+  }
+`;
+
+export const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+`;
+
+export const Title = styled.div`
+  display: block;
+  font-weight: 700;
+  font-size: 24px;
+
+  @media screen and (min-width: 767px) {
+    font-size: 28px;
+  }
+`;

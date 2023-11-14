@@ -1,16 +1,21 @@
 import { ContactsForm } from 'components/ContactForm/ContactForm';
-import { Link } from 'react-router-dom';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Wrapper, AvatarWrapper, BackBtn } from './AddContacts.styled';
+import { TbArrowBackUp } from 'react-icons/tb';
 
 const AddContacts = () => {
   return (
-    <div>
+    <Wrapper>
       <h2>Create Contact</h2>
-      <div>
-        <Link to="/"></Link>
-      </div>
+      <AvatarWrapper>
+        <BackBtn to="/">
+          <TbArrowBackUp size={'30px'} />
+        </BackBtn>
+        <AccountCircleIcon sx={{ fontSize: '210px', color: '#e5e5e5' }} />
+      </AvatarWrapper>
       <hr />
       <ContactsForm />
-    </div>
+    </Wrapper>
   );
 };
 

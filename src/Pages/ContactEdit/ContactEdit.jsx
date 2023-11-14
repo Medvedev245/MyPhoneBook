@@ -2,10 +2,19 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { selectCurrentContact } from 'components/Redux/selectors';
+import {
+  StyledForm,
+  Wrapper,
+  Button,
+  InputWrapper,
+} from './ContactEdit.styled';
 import { ErrorMessage, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import { PatternFormat } from 'react-number-format';
-
+import { TextField } from '@mui/material';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
+// import toast from 'react-hot-toast';
 import { editContact } from 'components/Redux/thunk';
 
 const ContactsSchema = Yup.object().shape({
@@ -24,11 +33,11 @@ const ContactEdit = () => {
 
   const initialValues = {
     name: currentContact ? currentContact.name : '',
-    number: currentContact ? currentContact.number : '',
+    number: currentContact ? currentContact.phone : '',
   };
 
   const handleSubmit = values => {
-    const updatedContact = { name: values.name, number: values.number, id };
+    const updatedContact = { name: values.name, number: values.phone, id };
 
     dispatch(editContact(updatedContact));
 
@@ -36,44 +45,48 @@ const ContactEdit = () => {
   };
 
   return (
-    <div>
+    <Wrapper>
       <Formik
         initialValues={initialValues}
         validationSchema={ContactsSchema}
         onSubmit={handleSubmit}
       >
-        <styled autoComplete="off">
-          <div>
+        <StyledForm autoComplete="off">
+          <InputWrapper>
+            <PersonOutlineIcon />
             <Field
+              as={TextField}
               label="Name"
               name="name"
               multiline
               variant="standard"
               className="fieldName"
             />
-          </div>
+          </InputWrapper>
           <ErrorMessage name="name" component="span" style={{ color: 'red' }} />
 
-          <div>
+          <InputWrapper>
+            <PhoneEnabledIcon />
             <Field
               as={PatternFormat}
+              customInput={TextField}
               name="number"
               variant="standard"
               format="+38 (0##) ### ## ##"
               allowEmptyFormatting={true}
               mask="_"
             />
-          </div>
+          </InputWrapper>
           <ErrorMessage
             name="number"
             component="span"
             style={{ color: 'red' }}
           />
 
-          <button type="submit">Edit</button>
-        </styled>
+          <Button type="submit">Edit</Button>
+        </StyledForm>
       </Formik>
-    </div>
+    </Wrapper>
   );
 };
 

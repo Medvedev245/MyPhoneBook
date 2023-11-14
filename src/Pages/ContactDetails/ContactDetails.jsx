@@ -2,8 +2,22 @@ import { Suspense, useEffect, useRef } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContactById } from 'components/Redux/selectors';
+import {
+  BackBtn,
+  AvatarWrapper,
+  Avatar,
+  TopContent,
+  BtnWrapper,
+  RemoveBtnWrapper,
+  RemoveButton,
+  EditBtnWrapper,
+  EditButton,
+  Name,
+} from './ContactDetails.styled';
+import { TbArrowBackUp } from 'react-icons/tb';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { getContactById, removeContact } from 'components/Redux/thunk';
-import { Link } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const ContactDetails = () => {
   const location = useLocation();
@@ -42,35 +56,41 @@ const ContactDetails = () => {
           marginTop: '100px',
         }}
       >
-        <div style={{ marginLeft: 'auto', marginRight: 'auto' }}></div>
+        <div style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+          <CircularProgress color="success" />
+        </div>
       </div>
     );
   }
 
   return (
     <>
-      <div>
-        <div>
-          <div>
-            <Link to={backLinkLocation.current}></Link>
-          </div>
-          <div>
-            <h2>{currentContact.name}</h2>
-          </div>
-        </div>
+      <TopContent>
+        <AvatarWrapper>
+          <Avatar>
+            <BackBtn to={backLinkLocation.current}>
+              <TbArrowBackUp size={'30px'} />
+            </BackBtn>
 
-        <div>
-          <div type="button" onClick={() => handleContactEdit()}>
-            <button>Edit</button>
-          </div>
-
+            <AccountCircleIcon sx={{ fontSize: '210px', color: '#7E57C2' }} />
+          </Avatar>
           <div>
-            <button typeof="button" onClick={handleDelete}>
+            <Name>{currentContact.name}</Name>
+          </div>
+        </AvatarWrapper>
+
+        <BtnWrapper>
+          <EditBtnWrapper type="button" onClick={() => handleContactEdit()}>
+            <EditButton>Edit</EditButton>
+          </EditBtnWrapper>
+
+          <RemoveBtnWrapper>
+            <RemoveButton typeof="button" onClick={handleDelete}>
               Delete
-            </button>
-          </div>
-        </div>
-      </div>
+            </RemoveButton>
+          </RemoveBtnWrapper>
+        </BtnWrapper>
+      </TopContent>
       <hr style={{ marginTop: '20px', marginBottom: '40px' }} />
 
       <div>
@@ -82,7 +102,9 @@ const ContactDetails = () => {
                 marginTop: '100px',
               }}
             >
-              <div style={{ marginLeft: 'auto', marginRight: 'auto' }}></div>
+              <div style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+                <CircularProgress color="success" />
+              </div>
             </div>
           }
         >
