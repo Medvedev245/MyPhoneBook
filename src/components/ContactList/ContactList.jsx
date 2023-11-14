@@ -89,7 +89,7 @@ export const ContactList = ({ stateItem }) => {
                   <Name>{ContactNameCapital}</Name>
                 </TableDataName>
 
-                <TableDataNumber>{contact.phone}</TableDataNumber>
+                <TableDataNumber>{contact.number}</TableDataNumber>
 
                 <ButtonsWrapper className="ButtonsWrapper">
                   <EditBtn

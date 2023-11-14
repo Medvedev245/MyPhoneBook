@@ -9,6 +9,7 @@ import {
   InputWrapper,
 } from './ContactEdit.styled';
 import { ErrorMessage, Field, Formik } from 'formik';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import * as Yup from 'yup';
 import { PatternFormat } from 'react-number-format';
 import { TextField } from '@mui/material';
@@ -24,6 +25,7 @@ const ContactsSchema = Yup.object().shape({
 
 const ContactEdit = () => {
   const { id } = useParams();
+  const contacts = useSelector(state => state.contacts.items);
   const currentContact = useSelector(state =>
     selectCurrentContact(state, { id })
   );
@@ -33,15 +35,22 @@ const ContactEdit = () => {
 
   const initialValues = {
     name: currentContact ? currentContact.name : '',
-    number: currentContact ? currentContact.phone : '',
+    number: currentContact ? currentContact.number : '',
   };
 
   const handleSubmit = values => {
-    const updatedContact = { name: values.name, number: values.phone, id };
+    const updatedContact = { name: values.name, number: values.number, id };
 
-    dispatch(editContact(updatedContact));
-
-    navigate(-1);
+    const existingContact = contacts.some(
+      contact => contact.name.toLowerCase() === values.name.toLowerCase()
+    );
+    if (existingContact) {
+      Notify.failure('Contact already exists');
+    } else {
+      Notify.success('Contact ADD');
+      dispatch(editContact(updatedContact));
+      navigate('/');
+    }
   };
 
   return (

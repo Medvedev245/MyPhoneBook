@@ -23,6 +23,8 @@ const ContactDetails = () => {
   const location = useLocation();
   const { id } = useParams();
 
+  console.log(id);
+
   const currentContact = useSelector(selectContactById);
 
   const dispatch = useDispatch();

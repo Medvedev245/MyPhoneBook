@@ -12,7 +12,7 @@ const PhoneView = () => {
         <h2>Contact Details</h2>
         <PhoneNumberWrapper>
           <FiPhone size={21} />
-          <a href={`${currentContact.phone}`}>{currentContact.phone}</a>
+          <a href={`tel:${currentContact.phone}`}>{currentContact.phone}</a>
         </PhoneNumberWrapper>
       </DetailsWrapper>
     </div>
