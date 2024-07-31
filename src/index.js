@@ -10,7 +10,7 @@ import { theme } from 'components/Redux/theme';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter basename="/goit-react-hw-07-phonebook">
+    <BrowserRouter basename="/MyPhoneBook">
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
