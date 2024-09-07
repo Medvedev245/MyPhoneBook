@@ -15,7 +15,6 @@ import { PatternFormat } from 'react-number-format';
 import { TextField } from '@mui/material';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
-// import toast from 'react-hot-toast';
 import { editContact } from 'components/Redux/thunk';
 
 const ContactsSchema = Yup.object().shape({

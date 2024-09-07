@@ -1,6 +1,8 @@
 import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from 'components/Layout/Layout';
+import Authorization from 'Pages/Authorization/Authorization';
+import Authentication from 'Pages/Authentication/Authentication';
 
 const Home = lazy(() => import('../Pages/Home'));
 const ContactDetails = lazy(() =>
@@ -14,6 +16,8 @@ export const App = () => {
   return (
     <>
       <Routes>
+        <Route path="/login" element={<Authorization />} />
+        <Route path="/register" element={<Authentication />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="contact/:id" element={<ContactDetails />}>
